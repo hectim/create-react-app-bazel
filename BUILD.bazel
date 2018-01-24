@@ -1,0 +1,14 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+
+nodejs_binary(
+  name = "noodles",
+  node_modules = "@boodles//:node_modules", # defaults to //:node_modules
+  entry_point = "/", # bazel errors without this line
+)
+
+nodejs_binary(
+  name = "react-scripts",
+  entry_point = "@boodles//:node_modules/react-scripts/bin/react-scripts.js",
+)

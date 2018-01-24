@@ -1,0 +1,16 @@
+{
+  "name": "create-react-app-bazel",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.0"
+  },
+  "scripts": {
+    "start": "bazel run :react-scripts start",
+    "build": "bazel run :react-scripts build",
+    "test": "bazel run :react-scripts test --env=jsdom",
+    "eject": "bazel run :react-scripts eject"
+  }
+}
