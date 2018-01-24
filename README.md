@@ -8,3 +8,4 @@ npm install
 npm start
 ```
 
+Todo: have Bazel manage the node_modules (should make the npm install unnecessary)
