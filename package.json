@@ -8,9 +8,9 @@
     "react-scripts": "1.1.0"
   },
   "scripts": {
-    "start": "bazel run :react-scripts start",
-    "build": "bazel run :react-scripts build",
-    "test": "bazel run :react-scripts test --env=jsdom",
-    "eject": "bazel run :react-scripts eject"
+    "start": "bazel run :node_modules/react-scripts/bin/react-scripts.js start",
+    "build": "bazel run :node_modules/react-scripts/bin/react-scripts.js build",
+    "test": "bazel run :node_modules/react-scripts/bin/react-scripts.js test --env=jsdom",
+    "eject": "bazel run :node_modules/react-scripts/bin/react-scripts.js eject"
   }
 }
