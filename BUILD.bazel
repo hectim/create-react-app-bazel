@@ -1,9 +1,10 @@
 package(default_visibility = ["//visibility:public"])
 
+exports_files(["bazel-bin/react-scripts"])
 load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 
 nodejs_binary(
   name = "react-scripts",
   node_modules = "@noodles//:node_modules",
-  entry_point = "react-scripts"
+  entry_point = "react-scripts/bin/react-scripts.js"
 )
