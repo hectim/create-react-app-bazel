@@ -1,7 +1,7 @@
 git_repository(
-  name = "build_bazel_rules_nodejs",
-  remote = "https://github.com/bazelbuild/rules_nodejs.git",
-  tag = "0.3.1",
+    name = "build_bazel_rules_nodejs",
+    remote = "https://github.com/bazelbuild/rules_nodejs.git",
+    tag = "0.4.0", # check for the latest tag when you install
 )
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories", "npm_install")
@@ -11,8 +11,8 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories", "npm_install")
 # You must still run the package manager to do this.
 node_repositories(package_json = ["//:package.json"])
 
-# bazel install dependencies and then exposes them as a new package name
 npm_install(
     name = "noodles",
-    package_json = "//:package.json", # package-lock.json works too
+    # This can also take package.json
+    package_json = "//:package.json",
 )
