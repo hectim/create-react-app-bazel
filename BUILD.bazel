@@ -5,5 +5,5 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 nodejs_binary (
   name = "react",
   node_modules = "@noodles//:node_modules",
-  entry_point = ".bin/react-scripts"
+  entry_point = "react-scripts/bin/react-scripts.js"
 )
