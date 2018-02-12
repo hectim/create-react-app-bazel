@@ -1,19 +1,53 @@
 package(default_visibility = ["//visibility:public"])
 
+filegroup(
+  name = "node_modules",
+  srcs = glob(
+    ["node_modules/**/*"],
+    exclude=["node_modules/**/test/**"]
+    ),
+)
+filegroup(name = "testgroup", srcs = glob(["src/**", "public/**"]))
+
 load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 
+
+# nodejs_binary(
+#   name = "rsbinary",
+#   entry_point = "react-scripts/scripts/build.js",
+#   node_modules = "//:node_modules",
+#   # templated_args = ["--node_options=--preserve-symlinks"],
+#   # data = ["//:testgroup", "//:package.json", "//:node_modules"],
+# )
+
+# load(":rsgen.bzl", "rs")
+
+# rs(
+#     name = "rsgen",
+#     srcs = ["//:testgroup", "package.json", "//:node_modules"],
+# )
+
+
+
+
+
+
+
+
+
+
 ##################################################
-# This is the react scripts build... doesn't work.
+# This is the react scripts build... doesn"t work.
 ##################################################
 
 # nodejs_binary(
 #     name = "reactscripts",
 #     entry_point = "react-scripts/bin/react-scripts.js",
 #     node_modules = "@noodles//:node_modules",
-#     data = glob([
-#         'src/**',
-#         'public/**',
-#     ]) + ['//:package.json'],
+#     # data = glob([
+#     #     "src/**",
+#     #     "public/**",
+#     # ]) + ["//:package.json"] + ["@noodles//:node_modules"],
 #     templated_args = ["--node_options=--preserve-symlinks"],
 # )
 
@@ -22,9 +56,9 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 # reactscripts(
 #     name = "reactscripts-build",
 #     srcs = glob([
-#         'src/**',
-#         'public/**',
-#     ]) + ['//:package.json'],
+#         "src/**",
+#         "public/**",
+#     ]) + ["//:package.json"],
 # )
 
 # This doesnt work at all.
@@ -33,13 +67,12 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 #   srcs = glob([
 #         "src/**",
 #         "public/**",
-#     ]) + ["//:package.json"] + [".babelrc"] + ["@noodles//:node_modules"],
+#     ]) + ["//:package.json"] + ["@noodles//:node_modules"],
 #   outs = ["build"],
 #   cmd = """
-#     npm run build
-#     cp -R build $(@D)
+#     ls -l external
 #     """,
-#   tags = ["local"],
+#   # tags = ["local"],
 # )
 
 
@@ -47,38 +80,57 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 # Parcel build... works with a unsandboxed genrule but not with a .bzl extension rule.
 ##################################################
 
+nodejs_binary(
+    name = "parcel",
+    entry_point = "parcel-bundler/bin/cli.js",
+    node_modules = "//:node_modules",
+    data =  glob(["src/**", "public/**"]) + ["package.json", ".babelrc"],
+
+    # data = glob([
+    #     "src/**",
+    #     "public/**",
+    # ]) + ["package.json"] + [".babelrc"] + ["//:node_modules"],
+    # templated_args = ["--node_options=--preserve-symlinks"],
+)
+
 # nodejs_binary(
-#     name = "parcel",
-#     entry_point = "parcel-bundler/bin/cli.js",
-#     node_modules = "@noodles//:node_modules",
-#     data = glob([
-#         "src/**",
-#         "public/**",
-#     ]) + ["//:package.json"] + [".babelrc"],
-#     templated_args = ["--node_options=--preserve-symlinks"],
+#     name = "webpack",
+#     entry_point = "webpack/bin/webpack.js",
+#     visibility = ["//visibility:public"],
 # )
 
-# load(":parcelgen.bzl", "parcel")
+load(":parcelgen.bzl", "parcel")
 
-# parcel(
-#     name = "parcel-build",
-#     srcs = glob([
-#         "src/**",
-#         "public/**",
-#     ]) + ["//:package.json"] + [".babelrc"],
-#     entry_point = "src/index.js"
-# )
+parcel(
+    name = "parcel-build",
+    srcs = ["//:testgroup", "package.json", ".babelrc"],
+    node_modules="//:node_modules",
+    entry_point = "src/index.js",
+)
 
 # genrule(
 #   name = "parcelgen",
 #   srcs = glob([
 #         "src/**",
 #         "public/**",
-#     ]) + ["//:package.json"] + [".babelrc"] + ["@noodles//:node_modules"],
+#     ]) + ["//:package.json"] + [".babelrc"] + ["//:node_modules"],
 #   outs = ["build"],
 #   cmd = """
 #     parcel build src/index.js --out-dir build
 #     cp -R build $(@D)
+#     """,
+# #   tags = ["local"], # uncomment this to un-sandbox... build is successful with this.
+# )
+
+# genrule(
+#   name = "parcelwatch",
+#   srcs = glob([
+#         "src/**",
+#         "public/**",
+#     ]) + ["//:package.json"] + [".babelrc"] + ["//:node_modules"],
+#   outs = ["watch"],
+#   cmd = """
+#     parcel public/index.html
 #     """,
 # #   tags = ["local"], # uncomment this to un-sandbox... build is successful with this.
 # )

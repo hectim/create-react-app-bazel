@@ -23,10 +23,9 @@ reactscripts = rule(
             default = Label("//:reactscripts"),
             executable = True,
             cfg = "host"
-        ),
-        "local": attr.label(default = Label(local = 1)),
+        )
     },
     outputs = {
-        "bundle": "herpderp"
+        "bundle": "build"
     },
 )
