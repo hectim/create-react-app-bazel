@@ -8,10 +8,14 @@ git_repository(
 )
 
 # Load node rules
-load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories", "npm_install")
+load("@build_bazel_rules_nodejs//:defs.bzl", "npm_install", "node_repositories")
 
 # Install Node/NPM etc
 node_repositories(package_json = ["//:package.json"])
 
 # Install deps
-# npm_install(name = "noodles", package_json = "//:package.json")
+npm_install(
+  name = "noodles", 
+  package_json = "//:package.json",
+  package_lock_json = "//:package-lock.json"
+)

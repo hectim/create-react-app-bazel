@@ -14,7 +14,7 @@ parcel = rule(
     implementation = _impl,
     attrs = {
         # "config": attr.label(allow_files = True, single_file = True),
-        "node_modules": attr.label(default = Label("//:node_modules")),
+        "node_modules": attr.label(default = Label("@noodles//:node_modules")),
         "entry_point": attr.string(mandatory = True),
         "srcs": attr.label_list(allow_files = True),
         "parcel": attr.label(
