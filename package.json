@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "./launch",
-    "build": "bazel build :parcel-build"
+    "build": "bazel run @yarn//:yarn install && bazel build :parcel-build"
   },
   "homepage": "http://herpderp.com/",
   "devDependencies": {
