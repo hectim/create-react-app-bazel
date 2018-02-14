@@ -10,5 +10,5 @@ Create-React-App basic project bundled (and dev server) with Parcel and built wi
 #### Todos
 
 * Auto-managed dependencies. The bazelbuild/node_js rules seem to be having trouble with this. 
-* Fix script to get the dirname and get logging to stdout from it
+* ~~Fix script to get the dirname and get logging to stdout from it~~
 * Protobuf imports proof of concept, should be able to use them as a dependency of the build.

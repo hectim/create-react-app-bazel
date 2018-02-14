@@ -1,3 +1,7 @@
+#!/bin/sh
+
+# grab the current directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# run the parcel dev server passing it the full path
 bazel run :parcel $DIR/public/index.html

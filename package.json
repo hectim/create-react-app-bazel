@@ -8,7 +8,7 @@
     "react-scripts": "1.1.0"
   },
   "scripts": {
-    "start": "node launcher.js",
+    "start": "./launch",
     "build": "bazel build :parcel-build"
   },
   "homepage": "http://herpderp.com/",
