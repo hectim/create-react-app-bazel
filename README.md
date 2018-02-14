@@ -1,5 +1,14 @@
-This is a basic React app initialized from [Create-React-App](https://github.com/facebook/create-react-app) and built using [Bazel](https://github.com/bazelbuild/bazel)
+## General
 
-BUILD.bazel and WORKSPACE were created based on the information found [here](https://github.com/bazelbuild/rules_nodejs)
+Create-React-App basic project bundled (and dev server) with Parcel and built with Bazel. 
 
-So this works if you `npm install` within the bazel-app-example folder that gets created as part of the bazel build and then run `bazel run @noodles//:node_modules/react-scripts/bin/react-scripts.js start`, (noodles is my node modules package). If you skip the npm install step, the javascript files don't get generated and the page just complains that it can't find them.
+#### Usage
+
+* `bazel run @yarn//:yarn install` to install dependencies into node_modules
+* `bazel run :parcel <__dirname>/public/index.html` to build and start the dev server
+
+#### Todos
+
+* Auto-managed dependencies. The bazelbuild/node_js rules seem to be having trouble with this. 
+* ~~Fix script to get the dirname and get logging to stdout from it~~
+* Protobuf imports proof of concept, should be able to use them as a dependency of the build.

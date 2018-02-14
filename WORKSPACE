@@ -1,18 +1,17 @@
+workspace(name = "operator")
+
+# Download node rules
 git_repository(
     name = "build_bazel_rules_nodejs",
     remote = "https://github.com/bazelbuild/rules_nodejs.git",
-    tag = "0.4.0", # check for the latest tag when you install
+    tag = "0.4.1", # check for the latest tag when you install
 )
 
+# Load node rules
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories", "npm_install")
 
-# NOTE: this rule installs nodejs, npm, and yarn, but does NOT install
-# your npm dependencies into your node_modules folder.
-# You must still run the package manager to do this.
+# Install Node/NPM etc
 node_repositories(package_json = ["//:package.json"])
 
-npm_install(
-    name = "noodles",
-    # This can also take package.json
-    package_json = "//:package.json",
-)
+# Install deps
+# npm_install(name = "noodles", package_json = "//:package.json")

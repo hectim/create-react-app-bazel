@@ -9,9 +9,14 @@
     "react-scripts": "1.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "./launch",
+    "build": "bazel build :parcel-build"
+  },
+  "homepage": "http://herpderp.com/",
+  "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "parcel-bundler": "^1.5.1",
+    "rollup": "^0.55.3"
   }
 }
