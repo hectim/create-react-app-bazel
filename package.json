@@ -9,7 +9,7 @@
     "react-scripts": "1.1.0"
   },
   "scripts": {
-    "start": "./launch",
+    "start": "bazel run @yarn//:yarn && ./launch",
     "build": "bazel run @yarn//:yarn install && bazel build :parcel-build"
   },
   "homepage": "http://herpderp.com/",
