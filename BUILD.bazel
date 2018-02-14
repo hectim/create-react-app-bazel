@@ -8,9 +8,41 @@ filegroup(
     ),
 )
 filegroup(name = "testgroup", srcs = glob(["src/**", "public/**"]))
-
 load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 
+
+nodejs_binary(
+    name = "parcel",
+    entry_point = "parcel-bundler/bin/cli.js",
+    node_modules = "//:node_modules",
+    # data =  glob(["src/**", "public/**"]) + ["package.json", ".babelrc"],
+    templated_args = ["--node_options=--preserve-symlinks"],
+)
+
+
+load(":parcelgen.bzl", "parcel")
+
+parcel(
+    name = "parcel-build",
+    srcs = ["//:testgroup", "package.json", ".babelrc"],
+    node_modules="//:node_modules",
+    entry_point = "src/index.js",
+)
+
+
+
+
+
+
+##############################################################
+# THIS IS ALL OLD CRAP KEEPING HERE FOR REFERENCE FOR A BIT
+##############################################################
+
+# nodejs_binary(
+#     name = "webpack",
+#     entry_point = "webpack/bin/webpack.js",
+#     visibility = ["//visibility:public"],
+# )
 
 # nodejs_binary(
 #   name = "rsbinary",
@@ -26,11 +58,6 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 #     name = "rsgen",
 #     srcs = ["//:testgroup", "package.json", "//:node_modules"],
 # )
-
-
-
-
-
 
 
 
@@ -80,33 +107,7 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 # Parcel build... works with a unsandboxed genrule but not with a .bzl extension rule.
 ##################################################
 
-nodejs_binary(
-    name = "parcel",
-    entry_point = "parcel-bundler/bin/cli.js",
-    node_modules = "//:node_modules",
-    data =  glob(["src/**", "public/**"]) + ["package.json", ".babelrc"],
 
-    # data = glob([
-    #     "src/**",
-    #     "public/**",
-    # ]) + ["package.json"] + [".babelrc"] + ["//:node_modules"],
-    # templated_args = ["--node_options=--preserve-symlinks"],
-)
-
-# nodejs_binary(
-#     name = "webpack",
-#     entry_point = "webpack/bin/webpack.js",
-#     visibility = ["//visibility:public"],
-# )
-
-load(":parcelgen.bzl", "parcel")
-
-parcel(
-    name = "parcel-build",
-    srcs = ["//:testgroup", "package.json", ".babelrc"],
-    node_modules="//:node_modules",
-    entry_point = "src/index.js",
-)
 
 # genrule(
 #   name = "parcelgen",
