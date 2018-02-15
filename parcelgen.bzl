@@ -13,7 +13,6 @@ def _impl(ctx):
 parcel = rule(
     implementation = _impl,
     attrs = {
-        # "config": attr.label(allow_files = True, single_file = True),
         "node_modules": attr.label(default = Label("//:node_modules")),
         "entry_point": attr.string(mandatory = True),
         "srcs": attr.label_list(allow_files = True),

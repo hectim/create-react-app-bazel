@@ -1,5 +1,9 @@
 package(default_visibility = ["//visibility:public"])
 
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+load("@org_pubref_rules_protobuf//protobuf:rules.bzl", "proto_language", "proto_compile")
+load(":parcelgen.bzl", "parcel")
+
 filegroup(
   name = "node_modules",
   srcs = glob(
@@ -7,9 +11,22 @@ filegroup(
     exclude=["node_modules/**/test/**"]
     ),
 )
-filegroup(name = "testgroup", srcs = glob(["src/**", "public/**"]))
-load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 
+filegroup(name = "testgroup", srcs = glob(["src/**", "public/**"]))
+
+proto_language(
+  name = "javascript",
+  pb_plugin = "//:node_modules/ts-protoc-gen",
+  pb_file_extensions = ["_pb.js"],
+  # inputs are just to build in advance...
+  pb_inputs = ["@tcn_protobuf//api/v0alpha:lms.proto"],
+  supports_grpc = True,
+)
+
+proto_compile(
+  name = "js_protos",
+  langs = [":javascript"]
+)
 
 nodejs_binary(
     name = "parcel",
@@ -19,18 +36,12 @@ nodejs_binary(
     templated_args = ["--node_options=--preserve-symlinks"],
 )
 
-
-load(":parcelgen.bzl", "parcel")
-
 parcel(
     name = "parcel-build",
     srcs = ["//:testgroup", "package.json", ".babelrc"],
     node_modules="//:node_modules",
     entry_point = "src/index.js",
 )
-
-
-
 
 
 

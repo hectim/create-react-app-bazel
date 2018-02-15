@@ -6,10 +6,11 @@
     "jasmine": "^2.99.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.0"
+    "react-scripts": "1.1.0",
+    "ts-protoc-gen": "^0.4.0"
   },
   "scripts": {
-    "start": "bazel run @yarn//:yarn && ./launch",
+    "start": "bazel run @yarn//:yarn install && ./launch",
     "build": "bazel run @yarn//:yarn install && bazel build :parcel-build"
   },
   "homepage": "http://herpderp.com/",
